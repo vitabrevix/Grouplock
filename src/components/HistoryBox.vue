@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'ChatBox',
+  name: 'HistoryBox',
   data() {
     return {
       chatEntries: [],

@@ -3,29 +3,39 @@
     <nav>
       <ul>
         <li>
-          <button type="button" @click="swapToChat">
+          <button
+            type="button"
+            :class="{ active: isActive('chat') }"
+            @click="$emit('change-tab', 'chat')"
+          >
             <i class="fas fa-comments"></i> Chat
-            <span class="tooltip">Chat with the other lockees</span>
           </button>
         </li>
         <li>
-          <button type="button" @click="swapToHistory">
+          <button
+            type="button"
+            :class="{ active: isActive('history') }"
+            @click="$emit('change-tab', 'history')"
+          >
             <i class="fas fa-calendar-alt"></i> History
-            <span class="tooltip"
-              >Show everything that has happened so far</span
-            >
           </button>
         </li>
         <li>
-          <button type="button" @click="swapToPersonal">
+          <button
+            type="button"
+            :class="{ active: isActive('personal') }"
+            @click="$emit('change-tab', 'personal')"
+          >
             <i class="fas fa-id-badge"></i> Personal
-            <span class="tooltip">Show only what affect you</span>
           </button>
         </li>
         <li>
-          <button type="button" @click="swapToInfo">
+          <button
+            type="button"
+            :class="{ active: isActive('info') }"
+            @click="$emit('change-tab', 'info')"
+          >
             <i class="fas fa-info-circle"></i> Info
-            <span class="tooltip">Get more information</span>
           </button>
         </li>
       </ul>
@@ -33,23 +43,13 @@
   </header>
 </template>
 
-<script>
-export default {
-  name: 'Header',
-  methods: {
-    swapToChat() {
-      // Your logic here
-    },
-    swapToHistory() {
-      // Your logic here
-    },
-    swapToPersonal() {
-      // Your logic here
-    },
-    swapToInfo() {
-      // Your logic here
-    },
-  },
+<script setup>
+import { defineProps } from 'vue';
+
+const props = defineProps(['currentTab']);
+
+const isActive = (tab) => {
+  return props.currentTab === tab;
 };
 </script>
 
@@ -75,17 +75,29 @@ export default {
 .header-bar nav ul li {
   flex-grow: 1;
   text-align: center;
-  position: relative; /* Needed for tooltip positioning */
+  position: relative;
 }
 
 .header-bar nav ul li button {
-  /*background: black;*/
+  width: 100%;
+  background: none;
   border: none;
   color: white;
   font: inherit;
   cursor: pointer;
   padding: 10px 20px;
-  position: relative; /* Needed for tooltip positioning */
+  position: relative;
+  transition: background-color 0.3s;
+}
+
+.header-bar nav ul li button.active {
+  background-color: #555;
+  border-radius: 5px;
+}
+
+.header-bar nav ul li button:hover {
+  background-color: #777;
+  border-radius: 5px;
 }
 
 .header-bar nav ul li button i {
@@ -106,19 +118,19 @@ export default {
   padding: 5px;
   position: absolute;
   z-index: 1;
-  bottom: 100%; /* Position the tooltip above the button */
+  bottom: 100%;
   left: 50%;
-  margin-left: -60px; /* Use half of the width to center the tooltip */
+  margin-left: -60px;
   opacity: 0;
   transition: opacity 0.3s;
-  width: 120px; /* Adjust width as needed */
+  width: 120px;
   font-size: 14px;
 }
 
 .tooltip::after {
   content: '';
   position: absolute;
-  top: 100%; /* At the bottom of the tooltip */
+  top: 100%;
   left: 50%;
   margin-left: -5px;
   border-width: 5px;

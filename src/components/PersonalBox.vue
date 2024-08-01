@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'ChatBox',
+  name: 'PersonalBox',
   data() {
     return {
       chatEntries: [],

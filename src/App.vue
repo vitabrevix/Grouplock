@@ -1,35 +1,43 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import Header from './components/Header.vue'
-import ChatBox from './components/ChatBox.vue'
-import SendMessage from './components/SendMessage.vue'
+import { ref } from 'vue';
+import Header from './components/Header.vue';
+import ChatBox from './components/ChatBox.vue';
+import SendMessage from './components/SendMessage.vue';
+import HistoryBox from './components/HistoryBox.vue';
+import PersonalBox from './components/PersonalBox.vue';
+import InfoBox from './components/InfoBox.vue';
 
+const currentTab = ref('info'); // Default tab
 </script>
 
 <template>
-  <Header />
   <div id="app">
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <Header :current-tab="currentTab" @change-tab="currentTab = $event" />
+    <main>
+      <div v-if="currentTab === 'chat'">
+        <ChatBox />
+        <SendMessage />
+      </div>
+      <div v-if="currentTab === 'history'">
+        <HistoryBox />
+      </div>
+      <div v-if="currentTab === 'personal'">
+        <HistoryBox />
+      </div>
+      <div v-if="currentTab === 'info'">
+        <HistoryBox />
+      </div>
+    </main>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<style>
+body {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  margin: 0;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+main {
+  padding: 20px;
 }
 </style>
